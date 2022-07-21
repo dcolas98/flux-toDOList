@@ -1,20 +1,45 @@
-const getState = ({ getStore, getActions, setStore }) => {
+const getState = ({
+	getStore,
+	getActions,
+	setStore
+}) => {
 	return {
 		store: {
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			list: []
 		},
 		actions: {
+			removeTodo: (index) => {
+				const store = getStore();
+				const removeArr = store.list.filter((list, i) => index !== i)
+				fetch("https://assets.breatheco.de/apis/fake/todos/user/dcolas",{
+					method: "PUT",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify(removeArr),
+				})
+				.then((response) => {
+					response.status === 200 ? setStore({list: removeArr})
+					: "";
+				})
+				.catch((error) => console.log("error", error));
+
+			},
+			addItem: (list) => {
+				fetch("https://assets.breatheco.de/apis/fake/todos/user/dcolas",{
+					method: "PUT",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify(list),
+				})
+				.then((response) => {
+					response.status === 200 ? setStore({list: list}) : "";
+				})
+				.catch((error) => console.log("error", error));
+
+			},
+
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
@@ -36,7 +61,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 
 				//reset the global store
-				setStore({ demo: demo });
+				setStore({
+					demo: demo
+				});
 			}
 		}
 	};

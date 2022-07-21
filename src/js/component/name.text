@@ -1,0 +1,9 @@
+				{/* <div>
+                {store.list.map((item) => {
+                    return (
+                        <div>
+                            {item.label}
+                        </div>
+                    )
+                })}
+                </div> */
