@@ -2,24 +2,29 @@ import React, {useState, useContext, useEffect} from 'react'
 import { Context } from "../store/appContext";
 
 export const ToDoList = () => {
-	const { store, actions } = useContext(Context);
 	const [todos, setTodos] = useState([]);
 	const [item, setItem] = useState("");
+	const removeTodo =(index) =>{
+		const removeArr = todos.filter((todos, i) => index !== i)
+				setTodos(removeArr);
+	}
 	return (
 		<div className="bigDiv">
 	<div className="todo-container">
 		<h1>To Do List</h1>
-		<input type="text" onChange={(e) => setItem(e.target.value) }/>
+		<input type="text" value={item} onChange={(e) => setItem(e.target.value) }/>
 		<button onClick={() => {
-				actions.addItem([...store.list, { label: item, done: false} ])
-
+			if(item !== "") {
+				setTodos([...todos, item])
+				setItem("")
+			}
 		}}>click me</button>
 			<div>
-                {store.list.map((item, index) => {
+                {todos.map((item, index) => {
                     return (
                         <div key = {index}>
-                            {item.label}
-							<button onClick={()=> actions.removeTodo(index)}>delete</button>
+                            {item}
+							<button onClick={()=> removeTodo(index)}>delete</button>
                         </div>
 						
                     )
