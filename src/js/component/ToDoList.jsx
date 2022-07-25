@@ -22,7 +22,7 @@ export const ToDoList = () => {
 			<div>
                 {todos.map((item, index) => {
                     return (
-                        <div key = {index}>
+                        <div className="d-flex justify-content-between" key = {index}>
                             {item}
 							<button onClick={()=> removeTodo(index)}>delete</button>
                         </div>
